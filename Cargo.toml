@@ -1,6 +1,6 @@
 [package]
 name = "download-exchange-rates"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Maksim Kudrautsau <maksim.kudrautsau@itechart-group.com>"]
 edition = "2018"
 

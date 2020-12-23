@@ -1,5 +1,5 @@
 use chrono::{prelude::*, Duration};
-use clap::{crate_authors, App, Arg};
+use clap::{crate_authors, crate_version, App, Arg};
 use tokio::fs::File;
 use tokio::prelude::*;
 
@@ -29,7 +29,7 @@ async fn write_to_xml_file(data: &[u8], file_name: &str) -> Result<(), std::io::
 #[tokio::main]
 async fn main() {
     let matches = App::new("Загрузчик курсов валют с сайта НБРБ")
-        .version("0.1")
+        .version(crate_version!())
         .author(crate_authors!())
         .about("Скачивает xml файлы с курсами валют с сайта NBRB за указанный период.")
         .arg(
@@ -49,18 +49,6 @@ async fn main() {
 
     let from_date_string = matches.value_of("from_date").unwrap();
     let to_date_string = matches.value_of("to_date").unwrap();
-
-    if from_date_string == to_date_string {
-        let exchange_rate = get_exchange_rate(from_date_string).await.unwrap();
-        write_to_xml_file(
-            exchange_rate.as_bytes(),
-            &from_date_string.replace('/', "."),
-        )
-        .await
-        .unwrap();
-
-        return;
-    }
 
     let from_date = NaiveDate::parse_from_str(from_date_string, "%m/%d/%Y").unwrap();
     let to_date = NaiveDate::parse_from_str(to_date_string, "%m/%d/%Y").unwrap();
