@@ -12,3 +12,10 @@ tokio = { version = "0.2", features = ["full"] }
 futures = "0.3"
 clap = "2.33"
 chrono = "0.4"
+
+# Optimize for size.
+[profile.release]
+panic = "abort"
+opt-level = "z"
+codegen-units = 1
+lto = true
